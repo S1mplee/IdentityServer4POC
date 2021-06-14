@@ -40,9 +40,14 @@ namespace IdentityServer
                 .AddTestUsers(TestUsers.Users);
 
             // in-memory, code config
-            builder.AddInMemoryIdentityResources(Config.IdentityResources);
-            builder.AddInMemoryApiScopes(Config.ApiScopes);
-            builder.AddInMemoryClients(Config.Clients);
+            services
+                .AddIdentityServer()
+                .AddInMemoryClients(IdentityConfiguration.Clients)
+                .AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
+                .AddInMemoryApiResources(IdentityConfiguration.ApiResources)
+                .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes)
+                .AddTestUsers(IdentityConfiguration.TestUsers)
+                .AddDeveloperSigningCredential();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
