@@ -26,22 +26,10 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            var builder = services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-
-                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
-                options.EmitStaticAudienceClaim = true;
-            })
-                .AddTestUsers(TestUsers.Users);
-
             // in-memory, code config
-            services
-                .AddIdentityServer()
+
+            var builder =  
+                services.AddIdentityServer()
                 .AddInMemoryClients(IdentityConfiguration.Clients)
                 .AddInMemoryIdentityResources(IdentityConfiguration.IdentityResources)
                 .AddInMemoryApiResources(IdentityConfiguration.ApiResources)
